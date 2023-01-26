@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monster Slayer</title>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="/Vue/vue.js"></script>
+
+
+</head>
+<body>
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">YOU</h1>
+            <img src="img/chibi.png" alt="" style="height: 500px; width: 100%">
+
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: red; margin: 0; color: white;" :style="{width: playerHealth + '%'}">
+                    {{playerHealth}}
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTER</h1>
+            <img src="img/monster.png" alt="" style="height: 500px; width: 100%">
+            
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: red; margin: 0; color: white;" :style="{width: monsterHealth + '%'}">
+                    {{ monsterHealth}}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls" v-if="!gameIsRunning">
+        <div class="small-12 columns">
+            <button id="start-game" @click="startNewGame">START NEW GAME</button>
+        </div>
+    </section>
+    <section class="row controls" v-else>
+        <div class="small-12 columns">
+            <button id="attack" v-on:click="atTack">ATTACK</button>
+            <button class="special-attack" v-on:click="specialAttack" :class="{special_attack_active: activeSpecialAttack}">SPECIAL ATTACK</button>
+            <button id="heal">HEAL</button>
+            <button id="give-up">GIVE UP</button>
+            <button id="updateMonster" v-on:click="upDateMonster"> LEVEL UP MONSTER</button>
+        </div>
+    </section>
+    <section class="row log">
+        <div class="small-12 columns">
+            <ul>
+                <li v-for="turn in turns">
+                    {{turn.textLog}}
+                <li>
+            </ul>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+<script src="./app.js"></script>

@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+.text-center {
+    text-align: center;
+}
+
+.healthbar {
+    width: 80%;
+    height: 40px;
+    background-color: #eee;
+    margin: auto;
+    transition: width 500ms;
+}
+
+.controls, .log {
+    margin-top: 30px;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 3px 6px #ccc;
+}
+
+.turn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.log ul {
+    list-style: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.log ul li {
+    margin: 5px;
+}
+
+.log ul .player-turn {
+    color: blue;
+    background-color: #e4e8ff;
+}
+
+.log ul .monster-turn {
+    color: red;
+    background-color: #ffc0c1;
+}
+
+button {
+    font-size: 20px;
+    background-color: #eee;
+    padding: 12px;
+    box-shadow: 0 1px 1px black;
+    margin: 10px;
+}
+
+#start-game {
+    background-color: #aaffb0;
+}
+
+#start-game:hover {
+    background-color: #76ff7e;
+}
+
+#attack {
+    background-color: #ff7367;
+}
+
+#attack:hover {
+    background-color: #ff3f43;
+}
+
+#special-attack {
+    background-color: #807e7c;
+}
+
+.special_attack_active {
+    background-color: #ffaf4f;
+}
+
+#heal {
+    background-color: #aaffb0;
+}
+
+#heal:hover {
+    background-color: #76ff7e;
+}
+
+#give-up {
+    background-color: #ffffff;
+}
+
+#give-up:hover {
+    background-color: #c7c7c7;
+}
+
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+  
+  /* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+  
+  /* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+  
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+  
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+  
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
