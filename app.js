@@ -7,24 +7,52 @@ new Vue({
         countAttack: 0,
         levelUpMonster: 20,
         activeSpecialAttack: false,
-        turns: [],
+        activeSpecialVideos: false,
+        activeHealing: false,
+        activeBlows: false,
+        activeVideos: false,
+        turnsPlayer: [],
+        turnsMonster: [],
+        localValue: localStorage.setItem('cat', 100),
+        display: 'none',
     },
     methods: {
         startNewGame: function() {
-            this.gameIsRunning = true;
-            this.playerHealth = 100;
-            this.monsterHealth = 100;
+                this.activeVideos = true;
+                this.$refs.video.play();
+
+            setTimeout(()=>{
+                this.gameIsRunning = true;
+                this.playerHealth = 100;
+                this.monsterHealth = 100;
+            },8000)
+            
+            
+            
+            // if (localStorage.monsterHealth) {
+            //     var h = localStorage.setItem('monsterHealth', this.monsterHealth);
+            //   }
+            
         },
+        
         atTack: function() {
             //Monster
             if(this.checkPlayerOption()){
                 return;
             }
+            this.activeBlows = true;
+            setTimeout(()=>{
+                this.activeBlows = false;
+            },1000)
             this.playerAttack();
             this.monsterAttack();            
             this.countAttack += 1
             if(this.countAttack >= 3){
                 this.activeSpecialAttack = true;
+            }
+            this.display = "block"
+            if(this.display == "block"){
+                this.display = 'none';
             }
             
         },
@@ -32,24 +60,67 @@ new Vue({
             if(this.checkPlayerOption()){
                 return true; 
             }
-            if(this.countAttack >= 3) { 
-                
-                damage = this.inputDamge(10, 18)
+            if(this.countAttack >= 3) {
+                this.activeSpecialVideos = true;
+                this.$refs.video2.play();
+                setTimeout(()=>{
+                    this.activeSpecialVideos = false;
+                },8000)
+                damage = this.inputDamge(13, 18)
                 this.monsterHealth -= damage;
-                this.turns.unshift({
+                this.turnsPlayer.unshift({
                     isPlayer: true,
-                    textLog:'quái bị trừ máu' + damage
+                    textLog:'-' + damage
                 })
                 //player
                 this.monsterAttack();
+                setTimeout(()=>{
+                    this.turnsPlayer.shift();
+                },400)
                 this.countAttack = 0
                 this.activeSpecialAttack = false;
             }
             
             
         },
+        health: function() {
+            if(this.checkPlayerOption()){
+                return true; 
+            }
+            if(this.playerHealth > 70) {
+                alert('Máu của bạn phải nhỏ hơn 70%')
+                return false;
+            }else if(this.playerHealth <= 70) {
+                this.activeHealing = true;
+                heal = this.playerHealth += 10;
+
+                this.turnsPlayer.unshift({
+                    textLog: 0,
+                    health: '+' + heal
+                })
+                setTimeout(()=>{
+                    this.turnsPlayer.shift();
+                },400)
+                
+            }else {
+                this.playerHealth = 70
+            }
+            this.monsterAttack();
+        }
+        ,
         upDateMonster: function() {
-            return this.monsterHealth += 20
+            const cat = localStorage.getItem('cat');
+            const value = 20 + parseInt(cat)
+            localStorage.setItem('cat', parseInt(value))
+            this.monsterHealth = value
+            this.playerHealth = 100
+            return this.monsterHealth
+        },
+        giveUp: function() {
+            confirm('Bạn có muốn bỏ cuộc không?')
+            this.gameIsRunning = true;
+            this.playerHealth = 100;
+            this.monsterHealth = 100;
         },
         inputDamge: function(minDamage, maxDamage) {
             return Math.max(Math.floor(Math.random() * maxDamage) + 1, minDamage);
@@ -57,40 +128,41 @@ new Vue({
         playerAttack: function(){
             damage = this.inputDamge(5, 10)
             this.monsterHealth -= damage;
-            this.turns.unshift({
+            this.turnsPlayer.unshift({
                 isPlayer: true,
-                textLog:'quái bị trừ máu' + damage
+                textLog:'-' + damage,
             })
             setTimeout(()=>{
-                this.turns.shift();
-            },2000)
+                this.turnsPlayer.shift();
+            },400)
             //player
         },
         monsterAttack: function() {
             damage = this.inputDamge(4, 10)
             this.playerHealth -= damage;
-            this.turns.unshift({
+            this.turnsMonster.unshift({
                 isPlayer: false,
-                textLog:'người bị trừ máu' + damage
+                textLog:'-' + damage
             })
             setTimeout(()=>{
-                this.turns.shift();
-            },2000)
+                this.turnsMonster.shift();
+            },400)
             //monster
         },
         checkPlayerOption: function(){
             if(this.monsterHealth <= 0) {
                 if(confirm('Bạn đã thắng có muốn chơi game mới hay không?')) {
-                    this.startNewGame();
+                    //this.startNewGame();
                     this.upDateMonster();
-                    //this.gameIsRunning = true;
                 }else {
                     this.gameIsRunning = false;
                 }
                 return true;
             }else if(this.playerHealth <= 0) {
                 if(confirm('Bạn đã thua có muốn chơi game mới hay không?')) {
-                    this.startNewGame();
+                    this.gameIsRunning = true;
+                    this.playerHealth = 100;
+                    this.monsterHealth = 100;
                     //this.gameIsRunning = true;
                 }else {
                     this.gameIsRunning = false;
@@ -99,5 +171,10 @@ new Vue({
             }
             return;
         }
-    }
+    },
+    // watch: {
+    //     monsterHealth(newHealth) {
+    //         localStorage.getItem('monsterHealth', parseInt(20 + this.monsterHealth));
+    //     }
+    // }
 })

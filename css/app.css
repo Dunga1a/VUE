@@ -1,15 +1,20 @@
 * {
     box-sizing: border-box;
 }
+#app {
+    background-image: url(/FileFiirstProject/img/hinh-nen-sieu-nhan-4k.jpg);
+    background-position: center center;
+    background-size: cover;
+}
 .text-center {
     text-align: center;
 }
 
 .healthbar {
-    width: 80%;
+    /* width: 80%; */
     height: 40px;
     background-color: #eee;
-    margin: auto;
+    /* margin: auto; */
     transition: width 500ms;
 }
 
@@ -96,47 +101,184 @@ button {
     background-color: #c7c7c7;
 }
 
-#snackbar {
-    visibility: hidden; /* Hidden by default. Visible on click */
-    min-width: 250px; /* Set a default minimum width */
-    margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #333; /* Black background color */
-    color: #fff; /* White text color */
-    text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
-    padding: 16px; /* Padding */
-    position: fixed; /* Sit on top of the screen */
-    z-index: 1; /* Add a z-index if needed */
-    left: 50%; /* Center the snackbar */
-    bottom: 30px; /* 30px from the bottom */
+.praent {
+    position: relative;
 }
-  
-  /* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
-    visibility: visible; /* Show the snackbar */
-    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-    However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+
+#minusBlood {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background-color: #ff3f43;
+    padding: 8px 10px;
+    border-top-right-radius:5px ;
+    border-bottom-right-radius:5px ;
+    border-top-left-radius: 5px;
+    border: transparent;
+    color: #aaffb0;
+    animation: fadeinBlood 0.4s;
+    -webkit-animation: fadeinBlood 0.4s;
 }
-  
+
+#healing {
+    position: absolute;
+    right: 0;
+    background-color: #76ff7e;
+    padding: 8px 10px;
+    border-top-right-radius:5px ;
+    border-bottom-right-radius:5px ;
+    border-top-left-radius: 5px;
+    border: transparent;
+    color: #0d0e0d;
+    -webkit-animation: fadein 0.5s;
+    animation: fadein 0.5s;
+}
+
+.healing {
+    display: none;
+}
+
+#minusBlood::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -4px;
+    bottom: -5px;
+    border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 10px solid #ff3f43;
+    transform: rotate(40deg);
+}
+
+.img_power {
+    left: 0;
+}
+
   /* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;}
+    from {bottom: 0px; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
 }
   
 @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
+    from {bottom: 0px; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
 }
-  
-@-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+
+@-webkit-keyframes fadeinBlood {
+    from {top: 50px; opacity: 0;}
+    to {top: 20px; opacity: 1;}
 }
   
-@keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+@keyframes fadeinBlood {
+    from {top: 50px; opacity: 0;}
+    to {top: 20px; opacity: 1;}
 }
+
+.specialSkill {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    animation: videos 3s linear;
+    display: none;
+}
+
+
+.video {
+    position: absolute;
+    top: 0;
+    width: 1000px;
+    opacity: 0.7;
+    animation: videos 3s linear;
+}
+
+.activeVideos {
+    opacity: 1;
+}
+
+#hexagon {
+    --blur: 5;
+    width: 40px;
+    height: 35px;
+    background: #a0bcde;
+    position: relative;
+    top: 200px;
+    animation: blow 0.9s linear;
+    z-index: 1;
+    filter: blur(3px);
+}
+
+.blows {
+    display: none;
+}
+
+.active{
+    display: block;
+}
+
+.activeBlows {
+    display: block;
+}
+
+#hexagon:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 10px solid #a0bcde;
+    filter: blur(3px);
+
+}
+
+#hexagon:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    filter: blur(3px);
+    border-top: 10px solid #a0bcde;
+}
+
+@keyframes blow {
+    0% { 
+        left: -50px; 
+        opacity: 0;
+    }
+    25% {
+        left: 100px; 
+        opacity: 1;
+    }
+    50% { 
+        right: 200px;
+        opacity: 1;
+    }
+    75% { 
+        right: -150px;
+        opacity: 1;
+    }
+    100%{
+        right: -350px;
+        opacity: 1;
+    }
+}
+
+@keyframes videos {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
